@@ -11,6 +11,12 @@ export const LoginFormWrapper = styled.div`
 export const LoginBoxWrapper = styled.div`
   display: flex;
   width: 50%;
+  @media screen and (max-width: 1040px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 740px) {
+    width: 95%;
+  }
   height: 45vh;
   background: rgb(235, 235, 250);
   border-radius: 10px;
@@ -56,8 +62,15 @@ export const LoginButton = styled.button`
   transition: ease 0.3s;
   color: #f2f2f2;
   font-size: 1rem;
+  @media screen and (max-width: 740px) {
+    font-size: 0.75rem;
+    padding: 1rem 2rem;
+  }
   &:hover {
     padding: 1rem 4rem;
+    @media screen and (max-width: 740px) {
+      padding: 1rem 2.5rem;
+    }
     box-shadow: 0px 0px 5px #66f;
   }
   &:focus {
@@ -70,6 +83,11 @@ export const LeftContentText = styled.p`
   font-size: ${(props) => {
     return props.header ? "2.5rem" : "1.75rem";
   }};
+  @media screen and (max-width: 740px) {
+    font-size: ${(props) => {
+      return props.header ? "2rem" : "1.25rem";
+    }};
+  }
   font-weight: ${(props) => {
     return props.header ? 500 : 400;
   }};
@@ -80,6 +98,7 @@ export const RightContentText = styled.p`
   font-size: "2.5rem";
   padding: 1rem;
   margin-bottom: 10px;
+  text-align: center;
 `;
 
 export const LoadingDisplay = styled.div`
@@ -105,11 +124,16 @@ export const StyledForm = styled.form`
     display: block;
     border: none;
     padding: 1rem;
+    width: 70%;
     margin-bottom: 10px;
     font-size: 1.5rem;
+    @media screen and (max-width: 740px) {
+      font-size: 1rem;
+    }
     text-align: center;
     background: #dedede;
     border-radius: 10rem;
+    align-self: center;
     color: #66f;
     &:focus {
       outline: none;
