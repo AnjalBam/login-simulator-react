@@ -1,0 +1,2 @@
+export const AUTHENTICATE = "AUTHENTICATE";
+export const UN_AUTHENTICATE = "UN_AUTHENTICATE";
