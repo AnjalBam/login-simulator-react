@@ -7,57 +7,73 @@ import * as STYLES from "../styles/LoginFormStyles";
 const LoginForm = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingDisplay, setLoadingDisplay] = useState("loading");
+  const [userName, setUserName] = useState("");
+
+  const handleChange = (event) => {
+    setUserName(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setIsLoading(true);
+    setTimeout(() => {
+      props.isAuthenticated
+        ? props.un_authenticateUser()
+        : props.authenticateUser(userName);
+      setIsLoading(false);
+      setUserName("");
+    }, 1000);
+  };
   return (
     <STYLES.LoginFormWrapper>
-      {/* <h1>This is a Login Form</h1>
-      <button
-        onClick={() =>
-          setTimeout(() => {
-            props.isAuthenticated
-              ? props.un_authenticateUser()
-              : props.authenticateUser();
-          }, 1000)
-        }>
-        {props.isAuthenticated ? "Log Out" : "Log In"}
-      </button> */}
-
       <STYLES.LoginBoxWrapper>
-        <>
-          <STYLES.BoxContentLeft className={isLoading ? loadingDisplay : ""}>
-            {!isLoading ? (
-              <>
-                <STYLES.LeftContentText header>
-                  Hey there,
-                </STYLES.LeftContentText>
+        <STYLES.BoxContentLeft className={isLoading ? loadingDisplay : ""}>
+          {!isLoading ? (
+            <>
+              <STYLES.LeftContentText header>
+                Hey {props.userName ? props.userName : "there"},
+              </STYLES.LeftContentText>
 
-                <STYLES.LeftContentText>
-                  Thank you for <br /> Visiting..
-                </STYLES.LeftContentText>
-              </>
-            ) : (
-              <STYLES.LoadingText>Loading...</STYLES.LoadingText>
+              <STYLES.LeftContentText>
+                {props.isAuthenticated ? (
+                  <>
+                    Thank you for <br /> Visiting...
+                  </>
+                ) : (
+                  <>
+                    Please Login with <br /> your Name
+                  </>
+                )}
+              </STYLES.LeftContentText>
+            </>
+          ) : (
+            <STYLES.LoadingText>Loading...</STYLES.LoadingText>
+          )}
+        </STYLES.BoxContentLeft>
+
+        <STYLES.BoxContentRight>
+          <STYLES.RightContentText>
+            {props.isAuthenticated
+              ? "Click Button below to Logout"
+              : "Please, Login below"}
+          </STYLES.RightContentText>
+
+          <STYLES.StyledForm onSubmit={handleSubmit}>
+            {props.isAuthenticated ? null : (
+              <input
+                required
+                type="text"
+                placeholder="UserName"
+                value={userName}
+                onChange={handleChange}
+              />
             )}
-          </STYLES.BoxContentLeft>
-
-          <STYLES.BoxContentRight>
-            <STYLES.RightContentText>
-              Please, Login below
-            </STYLES.RightContentText>
-
-            <STYLES.LoginButton
-              onClick={() => {
-                setIsLoading(true);
-                return setTimeout(() => {
-                  props.isAuthenticated
-                    ? props.un_authenticateUser()
-                    : props.authenticateUser();
-                  setIsLoading(false);
-                }, 1000);
-              }}>
+            <STYLES.LoginButton type="submit">
               {props.isAuthenticated ? "Log Out" : "Log In"}
             </STYLES.LoginButton>
-          </STYLES.BoxContentRight>
-        </>
+          </STYLES.StyledForm>
+        </STYLES.BoxContentRight>
       </STYLES.LoginBoxWrapper>
     </STYLES.LoginFormWrapper>
   );
@@ -66,11 +82,12 @@ const LoginForm = (props) => {
 const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.authReducer.isAuthenticated,
+    userName: state.authReducer.userName,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  authenticateUser: () => dispatch(ACTIONS.authenticateUser()),
+  authenticateUser: (userName) => dispatch(ACTIONS.authenticateUser(userName)),
   un_authenticateUser: () => dispatch(ACTIONS.un_authenticateUser()),
 });
 

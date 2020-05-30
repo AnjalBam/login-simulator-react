@@ -54,6 +54,8 @@ export const LoginButton = styled.button`
   margin-left: auto;
   margin-right: auto;
   transition: ease 0.3s;
+  color: #f2f2f2;
+  font-size: 1rem;
   &:hover {
     padding: 1rem 4rem;
     box-shadow: 0px 0px 5px #66f;
@@ -94,4 +96,24 @@ export const LoadingDisplay = styled.div`
 export const LoadingText = styled.p`
   padding: 10px;
   font-size: 2.5rem;
+`;
+
+export const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  & input[type="text"] {
+    display: block;
+    border: none;
+    padding: 1rem;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+    background: #dedede;
+    border-radius: 10rem;
+    color: #66f;
+    &:focus {
+      outline: none;
+      background: white;
+    }
+  }
 `;
